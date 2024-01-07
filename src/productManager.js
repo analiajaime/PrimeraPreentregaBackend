@@ -1,22 +1,50 @@
 import {promises as fs} from 'fs';
 import {v4 as uuidv4} from 'uuid';
 
-export class ProductManager {
+export class ProductManager 
 
-    contrsuctor() {
+    constructor() { 
         this.path = 'products.json';
         this.products = [];
     }
 
     addProduct = async ({title, description, price, thumbnail, code, stock, status, category}) => {
-        const id = uuidv4();
-        let newProduct = {id, title, description, price, thumbnail, code, stock, status, category};
-        this.products = await this.getProducts();
-        this.products.push(newProduct);
-        await fs.writeFile(this.path, JSON.stringify(this.products, null, '\t'));
-        return newProduct;
+        try {
+            
+            let products = await this.getProducts();
+            if (!Array.isArray(products)) {
+                products = [];
+            }
+    
+            const newProduct = {
+                id: uuidv4(), 
+                title, 
+                description, 
+                price, 
+                thumbnail, 
+                code, 
+                stock, 
+                status, 
+                category
+            };
+    
+            
+            products.push(newProduct);
+    
+            
+            await fs.writeFile(this.path, JSON.stringify(products, null, '\t'));
+    
+            
+            return newProduct;
+        
+    
+        } catch (error) {
+            
+            console.error('Error en addProduct:', error);
+            throw error; 
     }
-
+}
+    
 
     getProducts = async () => {
         try {
@@ -25,7 +53,7 @@ export class ProductManager {
             return responseJSON;
 
         } catch (error) {
-            console.log('Error');
+            console.log('Error en getProducts');
         }
     }
 
