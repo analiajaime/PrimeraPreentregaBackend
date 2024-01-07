@@ -9,16 +9,5 @@
 		"stock": 10,
 		"status": true,
 		"category": "categoria1"
-	},
-	{
-		"id": "6a2b5205-dbab-43d9-9288-8f9d5bd8d36e",
-		"title": "producto02",
-		"description": "producto02",
-		"price": 200,
-		"thumbnail": "url",
-		"code": "p001",
-		"stock": 10,
-		"status": true,
-		"category": "categoria1"
 	}
 ]

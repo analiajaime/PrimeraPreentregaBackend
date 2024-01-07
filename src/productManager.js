@@ -33,7 +33,7 @@ export class ProductManager {
     }
 
     // Obtiene un producto por ID
-    getProductById = async (id) => {
+    async getById(id) {
         try {
             const products = await this.getProducts();
             return products.find(product => product.id === id) || null;
@@ -42,7 +42,6 @@ export class ProductManager {
             return null;
         }
     }
-
     // Actualiza un producto
     updateProduct = async (id, { title, description, price, thumbnail, code, stock, status, category }) => {
         try {
