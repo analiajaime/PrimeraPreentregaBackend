@@ -1,0 +1,24 @@
+[
+	{
+		"id": "7ff8e95d-50ba-4f3a-b823-6de5994fc46e",
+		"title": "producto01",
+		"description": "producto01",
+		"price": 100,
+		"thumbnail": "url",
+		"code": "p001",
+		"stock": 10,
+		"status": true,
+		"category": "categoria1"
+	},
+	{
+		"id": "6a2b5205-dbab-43d9-9288-8f9d5bd8d36e",
+		"title": "producto02",
+		"description": "producto02",
+		"price": 200,
+		"thumbnail": "url",
+		"code": "p001",
+		"stock": 10,
+		"status": true,
+		"category": "categoria1"
+	}
+]

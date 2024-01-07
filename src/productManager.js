@@ -1,152 +1,98 @@
-import {promises as fs} from 'fs';
-import {v4 as uuidv4} from 'uuid';
+import { promises as fs } from 'fs';
+import { v4 as uuidv4 } from 'uuid';
 
-export class ProductManager 
-
-    constructor() { 
-        this.path = 'products.json';
+export class ProductManager {
+    constructor() {
+        this.path = './src/products.json';
         this.products = [];
     }
 
-    addProduct = async ({title, description, price, thumbnail, code, stock, status, category}) => {
-        try {
-            
-            let products = await this.getProducts();
-            if (!Array.isArray(products)) {
-                products = [];
-            }
-    
-            const newProduct = {
-                id: uuidv4(), 
-                title, 
-                description, 
-                price, 
-                thumbnail, 
-                code, 
-                stock, 
-                status, 
-                category
-            };
-    
-            
-            products.push(newProduct);
-    
-            
-            await fs.writeFile(this.path, JSON.stringify(products, null, '\t'));
-    
-            
-            return newProduct;
-        
-    
-        } catch (error) {
-            
-            console.error('Error en addProduct:', error);
-            throw error; 
-    }
-}
-    
-
-    getProducts = async () => {
+    // Obtiene los productos, devuelve un array vacío en caso de error
+    async getProducts() {
         try {
             const response = await fs.readFile(this.path, 'utf-8');
-            const responseJSON = JSON.parse(response);
-            return responseJSON;
-
+            console.log("File content:", response); // Additional logging
+            return JSON.parse(response);
         } catch (error) {
-            console.log('Error en getProducts');
+            console.error('Error al obtener los productos:', error);
+            return [];
+        }
+    }
+    // Añade un producto
+    addProduct = async ({ title, description, price, thumbnail, code, stock, status, category }) => {
+        try {
+            this.products = await this.getProducts();
+            const newProduct = { id: uuidv4(), title, description, price, thumbnail, code, stock, status, category };
+            this.products.push(newProduct);
+            await fs.writeFile(this.path, JSON.stringify(this.products, null, '\t'));
+            return newProduct;
+        } catch (error) {
+            console.error('Error al añadir producto:', error);
+            throw error;
         }
     }
 
+    // Obtiene un producto por ID
     getProductById = async (id) => {
         try {
-            const response = await this.getProducts();
-            const product = response.find(product => product.id === id);
-            return product;
-
+            const products = await this.getProducts();
+            return products.find(product => product.id === id) || null;
         } catch (error) {
-            console.log('Product not found');
+            console.error('Error al obtener el producto por ID:', error);
+            return null;
         }
     }
 
-    updateProduct = async (id, {title, description, price, thumbnail, code, stock, status, category}) => {
+    // Actualiza un producto
+    updateProduct = async (id, { title, description, price, thumbnail, code, stock, status, category }) => {
         try {
             this.products = await this.getProducts();
             const productIndex = this.products.findIndex(product => product.id === id);
-            this.products[productIndex] = {id, title, description, price, thumbnail, code, stock, status, category};
+            if (productIndex === -1) {
+                console.error('Producto no encontrado para actualizar');
+                return null;
+            }
+            this.products[productIndex] = { id, title, description, price, thumbnail, code, stock, status, category };
             await fs.writeFile(this.path, JSON.stringify(this.products, null, '\t'));
             return this.products[productIndex];
-
         } catch (error) {
-            console.log('Product not found');
+            console.error('Error al actualizar producto:', error);
+            throw error;
         }
     }
 
+    // Elimina un producto
     deleteProduct = async (id) => {
         try {
             this.products = await this.getProducts();
             const productIndex = this.products.findIndex(product => product.id === id);
+            if (productIndex === -1) {
+                console.error('Producto no encontrado para eliminar');
+                return null;
+            }
             const product = this.products[productIndex];
             this.products.splice(productIndex, 1);
             await fs.writeFile(this.path, JSON.stringify(this.products, null, '\t'));
             return product;
-
         } catch (error) {
-            console.log('Product not found');
+            console.error('Error al eliminar producto:', error);
+            throw error;
         }
     }
 
+    // Las funciones de filtro siguen la misma estructura, solo cambiando la condición de filtro
     getProductsByCategory = async (category) => {
         try {
-            const response = await this.getProducts();
-            const products = response.filter(product => product.category === category);
-            return products;
-
+            const products = await this.getProducts();
+            return products.filter(product => product.category === category);
         } catch (error) {
-            console.log('Product not found');
+            console.error('Error al obtener productos por categoría:', error);
+            return [];
         }
     }
+}
 
-    getProductsByCode = async (code) => {
-        try {
-            const response = await this.getProducts();
-            const products = response.filter(product => product.code === code);
-            return products;
+// Path: src/index.js
 
-        } catch (error) {
-            console.log('Product not found');
-        }
-    }
 
-    getProductsByPrice = async (price) => {
-        try {
-            const response = await this.getProducts();
-            const products = response.filter(product => product.price === price);
-            return products;
-
-        } catch (error) {
-            console.log('Product not found');
-        }
-    }
-
-    getProductsByStatus = async (status) => {
-        try {
-            const response = await this.getProducts();
-            const products = response.filter(product => product.status === status);
-            return products;
-
-        } catch (error) {
-            console.log('Product not found');
-        }
-    }
-
-    getProductsByTitle = async (title) => {
-        try {
-            const response = await this.getProducts();
-            const products = response.filter(product => product.title === title);
-            return products;
-
-        } catch (error) {
-            console.log('Product not found');
-        }
-    }
 
