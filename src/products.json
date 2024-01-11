@@ -9,5 +9,16 @@
 		"stock": 10,
 		"status": true,
 		"category": "categoria1"
+	},
+	{
+		"id": "820a3438-35c3-41fe-921f-ca06b00157ba",
+		"title": "producto03",
+		"description": "producto03",
+		"price": 300,
+		"thumbnail": "url",
+		"code": "p003",
+		"stock": 10,
+		"status": true,
+		"category": "categoria1"
 	}
 ]
