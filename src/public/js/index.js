@@ -1,20 +1,62 @@
-import express from 'express';
-import { ProductManager } from '../../controllers/productManager.js';
-import { productsRouter } from '../../routes/products.router.js';
-import { cartsRouter } from '../../routes/carts.router.js'; 
 
-const app = express();
-const PORT = 8080;
+const socket = require("socket.io");
 
-export const productManager = new ProductManager();
+socket.on("productos", (data) => {
+    renderProductos(data);
+}); 
 
-app.use(express.json());
+//Función para renderizar la tabla de productos:
+const renderProductos = (productos) => {
+    const contenedorProductos = document.getElementById("contenedorProductos");
+    contenedorProductos.innerHTML = "";
 
-app.use('/api/products', productsRouter);
-app.use('/api/cart', cartsRouter); 
 
-app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
+    productos.forEach(item => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        //Agregamos boton para eliminar: 
+        card.innerHTML = `
+                <p>Id ${item.id} </p>
+                <p>Titulo ${item.title} </p>
+                <p>Precio ${item.price} </p>
+                <button> Eliminar Producto </button>
+        
+        `;
+        contenedorProductos.appendChild(card);
+
+        //Agregamos el evento eliminar producto:
+        card.querySelector("button").addEventListener("click", () => {
+            eliminarProducto(item.id);
+        });
+    });
+}
+
+//Eliminar producto: 
+const eliminarProducto = (id) => {
+    socket.emit("eliminarProducto", id);
+}
+
+//Agregar producto:
+
+document.getElementById("btnEnviar").addEventListener("click", () => {
+    agregarProducto();
 });
+
+
+const agregarProducto = () => {
+    const producto = {
+        title: document.getElementById("title").value,
+        description: document.getElementById("description").value,
+        price: document.getElementById("price").value,
+        img: document.getElementById("img").value,
+        code: document.getElementById("code").value,
+        stock: document.getElementById("stock").value,
+        category: document.getElementById("category").value,
+        status: document.getElementById("status").value === "true"
+    };
+    
+    socket.emit("agregarProducto", producto);
+};
+
 
 

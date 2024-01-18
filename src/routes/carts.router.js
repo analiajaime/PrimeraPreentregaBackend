@@ -1,5 +1,10 @@
 import { Router } from "express";
 
+const express = require("express");
+const router = express.Router();
+const CartManager = require("../controllers/cartManager.js");
+const cartManager = new CartManager("./src/models/carts.json");
+
 const cartsRouter = Router();
 
 cartsRouter.post('/', async (req, res) => {
@@ -14,7 +19,7 @@ cartsRouter.post('/', async (req, res) => {
 
 cartsRouter.get('/:cid/products', async (req, res) => {
     try {
-        const cartProducts = await CartManager.getCartProducts(req.params.cid); // Changed from cart_id to cid
+        const cartProducts = await CartManager.getCartProducts(req.params.cid); 
         res.json(cartProducts);
     } catch (error) {
         console.error('Error al obtener productos del carrito:', error);
@@ -24,7 +29,7 @@ cartsRouter.get('/:cid/products', async (req, res) => {
 
 cartsRouter.post('/:cid/products/:product_id', async (req, res) => {
     try {
-        const cart = await CartManager.addProductToCart(req.params.cid, req.params.product_id); // Consistent parameter name
+        const cart = await CartManager.addProductToCart(req.params.cid, req.params.product_id);
         res.json(cart);
     } catch (error) {
         console.error('Error al agregar producto al carrito:', error);
