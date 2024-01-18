@@ -1,4 +1,5 @@
 // Importaciones
+import express from 'express'; // Importa express
 import { promises as fs } from 'fs'; // Utiliza 'fs' para operaciones de archivos con promesas
 import { v4 as uuidv4 } from 'uuid';  // Importa 'uuidv4' para generar IDs únicos
 

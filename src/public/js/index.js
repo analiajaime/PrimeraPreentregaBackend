@@ -1,48 +1,46 @@
+// Importar Socket.IO para el lado del cliente
+import io from "socket.io-client";
+const socket = io(); // Conecta al socket del servidor
 
-const socket = require("socket.io");
-
+// Escuchar eventos de 'productos' y renderizarlos
 socket.on("productos", (data) => {
     renderProductos(data);
 }); 
 
-//Función para renderizar la tabla de productos:
+// Función para renderizar la tabla de productos
 const renderProductos = (productos) => {
     const contenedorProductos = document.getElementById("contenedorProductos");
     contenedorProductos.innerHTML = "";
 
-
     productos.forEach(item => {
         const card = document.createElement("div");
         card.classList.add("card");
-        //Agregamos boton para eliminar: 
         card.innerHTML = `
-                <p>Id ${item.id} </p>
-                <p>Titulo ${item.title} </p>
-                <p>Precio ${item.price} </p>
-                <button> Eliminar Producto </button>
-        
+            <p>Id ${item.id} </p>
+            <p>Titulo ${item.title} </p>
+            <p>Precio ${item.price} </p>
+            <button> Eliminar Producto </button>
         `;
         contenedorProductos.appendChild(card);
 
-        //Agregamos el evento eliminar producto:
+        // Agregamos el evento eliminar producto
         card.querySelector("button").addEventListener("click", () => {
             eliminarProducto(item.id);
         });
     });
 }
 
-//Eliminar producto: 
+// Función para eliminar producto
 const eliminarProducto = (id) => {
     socket.emit("eliminarProducto", id);
 }
 
-//Agregar producto:
-
+// Evento de clic para agregar producto
 document.getElementById("btnEnviar").addEventListener("click", () => {
     agregarProducto();
 });
 
-
+// Función para agregar producto
 const agregarProducto = () => {
     const producto = {
         title: document.getElementById("title").value,
@@ -57,6 +55,3 @@ const agregarProducto = () => {
     
     socket.emit("agregarProducto", producto);
 };
-
-
-
