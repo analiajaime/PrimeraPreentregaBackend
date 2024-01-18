@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export class ProductManager {
     constructor() {
-        this.path = './src/products.json';
+        this.path = './src/models/products.json';
         this.products = [];
     }
 
@@ -111,6 +111,7 @@ export class ProductManager {
     }
 }
 
+export const productManager = new ProductManager();
 
 
 

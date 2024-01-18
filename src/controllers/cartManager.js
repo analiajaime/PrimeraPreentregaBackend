@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export class cartManager {
     constructor() {
-        this.path = './src/cart.json';
+        this.path = './src/models/cart.json';
     }
 
     async getCarts() {
