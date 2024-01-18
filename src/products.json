@@ -20,5 +20,16 @@
 		"stock": 10,
 		"status": true,
 		"category": "categoria1"
+	},
+	{
+		"id": "e4a1f032-dc56-4984-b202-160b17a5ad83",
+		"title": "producto05",
+		"description": "producto05",
+		"price": 1550,
+		"thumbnail": "url",
+		"code": "p005",
+		"stock": 1150,
+		"status": true,
+		"category": "categoria1"
 	}
 ]

@@ -19,18 +19,38 @@ export class ProductManager {
         }
     }
     // Añade un producto
-    addProduct = async ({ title, description, price, thumbnail, code, stock, status, category }) => {
+    addProduct = async (productData) => {
         try {
+            // Validar campos requeridos (excepto fotos y status)
+            if (!productData.title || !productData.description || !productData.price) {
+                throw new Error('Faltan campos requeridos');
+            }
+    
+            // Establecer status por defecto a true si no se proporciona
+            const status = productData.status !== undefined ? productData.status : true;
+    
+            // Obtener productos existentes
             this.products = await this.getProducts();
-            const newProduct = { id: uuidv4(), title, description, price, thumbnail, code, stock, status, category };
+    
+            // Crear nuevo producto con id único y status definido
+            const newProduct = {
+                id: uuidv4(),
+                ...productData,
+                status
+            };
+    
+            // Agregar el nuevo producto a la lista
             this.products.push(newProduct);
+    
+            // Escribir en el archivo
             await fs.writeFile(this.path, JSON.stringify(this.products, null, '\t'));
+    
             return newProduct;
         } catch (error) {
             console.error('Error al añadir producto:', error);
             throw error;
         }
-    }
+    };
 
     // Obtiene un producto por ID
     async getById(id) {
