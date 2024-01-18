@@ -111,7 +111,6 @@ export class ProductManager {
     }
 }
 
-// Path: src/index.js
 
 
 
