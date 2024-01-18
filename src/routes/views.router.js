@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
     try {
         const productos = await productManager.getProducts();
         res.render("index", {
-            productos: productos
+            products: productos
         });
     } catch (error) {
         console.error("Error al obtener productos", error);
