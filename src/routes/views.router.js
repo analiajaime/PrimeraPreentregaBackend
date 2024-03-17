@@ -1,9 +1,9 @@
 const express = require("express");
-const router = express.Router(); 
-const ProductManager = require("../controllers/productManager.js");
-const productManager = new ProductManager("./src/models/products.json");
+const router = express.Router();
+import { productManager } from "../controllers/productManager.js";
 
 const viewsRouter = Router();
+const productManager = new ProductManager("./src/models/products.json");
 
 router.get("/", async (req, res) => {
     try {

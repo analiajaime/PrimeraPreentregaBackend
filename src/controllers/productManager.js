@@ -1,4 +1,3 @@
-import express from 'express';
 import { promises as fs } from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -112,7 +111,8 @@ export class ProductManager {
     }
 }
 
-export const productManager = new ProductManager();
+module.exports = ProductManager;
+
 
 
 

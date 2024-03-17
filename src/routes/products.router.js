@@ -1,9 +1,7 @@
 import { Router } from 'express';
 import { productManager } from '../controllers/productManager.js';
 
-const express = require('express');
-const router = express.Router();
-const ProductManager = require('../controllers/productManager.js');
+const router = Router();
 const productManager = new ProductManager('./src/models/products.json');
 
 const productsRouter = Router();

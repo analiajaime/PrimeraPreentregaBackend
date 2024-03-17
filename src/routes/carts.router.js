@@ -1,8 +1,7 @@
 import { Router } from "express";
 
 const express = require("express");
-const router = express.Router();
-const CartManager = require("../controllers/cartManager.js");
+const CartManager = require("../controllers/cartManager.json");
 const cartManager = new CartManager("./src/models/carts.json");
 
 const cartsRouter = Router();

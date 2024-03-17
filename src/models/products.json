@@ -1,35 +1,3 @@
 [
-	{
-		"id": "7ff8e95d-50ba-4f3a-b823-6de5994fc46e",
-		"title": "producto01",
-		"description": "producto01",
-		"price": 100,
-		"thumbnail": "url",
-		"code": "p001",
-		"stock": 10,
-		"status": true,
-		"category": "categoria1"
-	},
-	{
-		"id": "820a3438-35c3-41fe-921f-ca06b00157ba",
-		"title": "producto03",
-		"description": "producto03",
-		"price": 300,
-		"thumbnail": "url",
-		"code": "p003",
-		"stock": 10,
-		"status": true,
-		"category": "categoria1"
-	},
-	{
-		"id": "e4a1f032-dc56-4984-b202-160b17a5ad83",
-		"title": "producto05",
-		"description": "producto05",
-		"price": 1550,
-		"thumbnail": "url",
-		"code": "p005",
-		"stock": 1150,
-		"status": true,
-		"category": "categoria1"
-	}
+	
 ]
